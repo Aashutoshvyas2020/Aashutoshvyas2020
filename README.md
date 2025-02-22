@@ -1,6 +1,6 @@
 - 👋 Hi, ***************************
-- 👀 I’m interested in Photoshop, Graphic design, HTML, Python, JS, CSS, Archery
-- 🌱 I’m currently learning selenium and web automation
+- 👀 I’m interested in Photoshop, Photography, Python, Archery
+- 🌱 I’m currently learning Python
 - 💞️ I’m looking to collaborate on issues inspiration and having fun :D
 
 
