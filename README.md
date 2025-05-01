@@ -1,7 +1,7 @@
 - 👋 Hi, ***************************
-- 👀 I’m interested in Photoshop, Photography, Python, Archery
+- 👀 I’m interested in Photoshop, Photography, Python
 - 🌱 I’m currently learning Python
-- 💞️ I’m looking to collaborate on issues inspiration and having fun :D
+
 
 
 <!---
