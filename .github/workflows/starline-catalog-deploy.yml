@@ -1,0 +1,34 @@
+name: Deploy Starline catalog audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "starline-catalog-20260724.part.*"
+      - ".github/workflows/starline-catalog-deploy.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Assemble verified catalog build
+        run: |
+          set -euo pipefail
+          cat starline-catalog-20260724.part.* | base64 --decode > /tmp/starline-catalog.zip
+          mkdir -p /tmp/starline-catalog
+          unzip -q /tmp/starline-catalog.zip -d /tmp/starline-catalog
+          test -f /tmp/starline-catalog/netlify/edge-functions/proxy.ts
+      - name: Deploy to existing Starline project
+        working-directory: /tmp/starline-catalog
+        run: >-
+          npx -y @netlify/mcp@latest
+          --site-id 12f16ad4-5b85-48bd-9b6c-caf046f43c12
+          --proxy-path "https://netlify-mcp.netlify.app//proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..PDRmRvfTE0kb3IM5.lA7eCl2MpruhIBIA7GiqF0lgjppQewa8lzn3YftLMFC4dTN__9N7sU9EQ75gkoPy65d4dkTRtv_FCwSJ0HKDvmgJW7LOvJqOjg9vY9DYrn6y3m2gJPIGbn4BBbr70nsvag9HJcYIyXVmKLd1PtI587-4eMsFhV5DJggs70lMLZhakKpht5vFGfCBIjs8ZspTgowrOxbC5bRNBCwX__tW6iPwi9f_oyNIowVfzxO8xQqa_lRB48JtjvIMz1FNl2jNeFHgFsgG7ybaIKwjtM1TJMSnOA1lgEVx3Co8liM0RO2nT4KDbGMQSCwryeH5ppISL-pEa2kN5hX64ePc8lOl_A0FkCkdqk_AX_HxfeoGEGS05gRKHBRG7Z4aTexbzN66VOXnk2Vf.Ao3M430b_uc5N1M32yJGCA"
