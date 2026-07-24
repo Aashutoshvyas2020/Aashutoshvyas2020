@@ -15,14 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - name: Assemble verified catalog build
         run: |
           set -euo pipefail
-          cat starline-catalog-20260724.part.* | base64 --decode > /tmp/starline-catalog.zip
+          curl -fsSL https://raw.githubusercontent.com/Aashutoshvyas2020/Aashutoshvyas2020/starline-deploy-source/starline-catalog-20260724.part.00 -o /tmp/part.00
+          curl -fsSL https://raw.githubusercontent.com/Aashutoshvyas2020/Aashutoshvyas2020/starline-deploy-source/starline-catalog-20260724.part.01 -o /tmp/part.01
+          cat /tmp/part.* | base64 --decode > /tmp/starline-catalog.zip
           mkdir -p /tmp/starline-catalog
           unzip -q /tmp/starline-catalog.zip -d /tmp/starline-catalog
           test -f /tmp/starline-catalog/netlify/edge-functions/proxy.ts
@@ -31,4 +29,4 @@ jobs:
         run: >-
           npx -y @netlify/mcp@latest
           --site-id 12f16ad4-5b85-48bd-9b6c-caf046f43c12
-          --proxy-path "https://netlify-mcp.netlify.app//proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..PDRmRvfTE0kb3IM5.lA7eCl2MpruhIBIA7GiqF0lgjppQewa8lzn3YftLMFC4dTN__9N7sU9EQ75gkoPy65d4dkTRtv_FCwSJ0HKDvmgJW7LOvJqOjg9vY9DYrn6y3m2gJPIGbn4BBbr70nsvag9HJcYIyXVmKLd1PtI587-4eMsFhV5DJggs70lMLZhakKpht5vFGfCBIjs8ZspTgowrOxbC5bRNBCwX__tW6iPwi9f_oyNIowVfzxO8xQqa_lRB48JtjvIMz1FNl2jNeFHgFsgG7ybaIKwjtM1TJMSnOA1lgEVx3Co8liM0RO2nT4KDbGMQSCwryeH5ppISL-pEa2kN5hX64ePc8lOl_A0FkCkdqk_AX_HxfeoGEGS05gRKHBRG7Z4aTexbzN66VOXnk2Vf.Ao3M430b_uc5N1M32yJGCA"
+          --proxy-path "https://netlify-mcp.netlify.app//proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..a27GwhTAFTyXfpUt.YylqDLHHEa5GoW1QiFyfRlHxmZ8qov4Cmqt_y5xURFnzkuK4TGl_Ywi_PMLlHrxThug4sTcaLt4xck3d7QPix32dTRXJf4c7SOEwbzYFLpci52a9wGoDQDdfVb0qm93ZV6t1o-R7aSFTH_1AtsHB0RoDTXmY-9D49x_ueeAz4tr3qxQoo1MbXgKu0sWSACLjSTxoQSa4ApBpYuyL0GR7DBaeNrBJE50tL4eJIZ-Sclt8nq9isgkNWGKSQa8nbjMVL2TRPMJh9bbv32NvtFMU4CHMxVa-mx8kU9j6XmelekvfL6dRHcgxxJWg7JqPl72pXQ_cOGN3LfoZHtZYOun3poBsOrjJyo1fHbMleF-aGg4Oa1iNxJke9ZuSmJG1vhIjNGCGuSij.CeNkiaHCayEozh1Pxw_FpA"
